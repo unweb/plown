@@ -26,7 +26,7 @@ EXAMPLES:
     ''' % sys.argv[0]
 
 __version__ = "0.2"
-__url__ = "https://unweb.me/projects/Plown"
+__url__ = "https://unweb.me/projects/open-source/plown"
 __copyright__ = "Unweb.me"
 __license__ = "GPL"
 __author__ = "provetza"
