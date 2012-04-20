@@ -1,7 +1,7 @@
 About
 =====
 
-Plown is a security scanner tool for Plone CMS. Plone has the best security track record of any major CMS and is considered highly secure. Plown has been developed to ease the discovery of usernames and passwords, and act as an assistant to system administrators to strengthen their Plone sites.
+Plown is a security scanner tool for Plone CMS. Although Plone has the best security track record of any major CMS and is considered highly secure, misconfigurations and weak passwords might enable system break-ins. Plown has been developed to ease the discovery of usernames and passwords, and act as an assistant to system administrators to strengthen their Plone sites.
 
 
 Installation

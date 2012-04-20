@@ -1,14 +1,15 @@
 #!/usr/bin/python
 
-import sys, os, re
+import sys, os, re, time
 from optparse import OptionParser
-from threading import Thread
+import threading
 import urllib2, urllib
 
 sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 
 description="""Plown is a security scanner tool for Plone CMS.
-Plone has the best security track record of any major CMS and is considered highly secure. 
+Although Plone has the best security track record of any major CMS and is considered highly secure, misconfigurations 
+and weak passwords might enable system break-ins. 
 Plown has been developed to ease the discovery of usernames and passwords, 
 and act as an assistant to system administrators to strengthen their Plone sites.
 """
@@ -46,7 +47,7 @@ VULNERABILITIES = {
 }
 
 
-class BruteForcer(Thread):
+class BruteForcer(threading.Thread):
     "Handles the threading stuff"
     def __init__(self, username, password, target):
         super(BruteForcer, self).__init__()
@@ -148,7 +149,7 @@ def try_pair(target, username, password):
 
     data = urllib.urlencode(values)
     try:
-        req = urllib2.Request(url, data)
+        req = urllib2.Request(url, data, headers=headers)
         response = urllib2.urlopen(req)
         if '__ac' in response.headers['set-cookie']: 
             global pairs_found
@@ -255,6 +256,13 @@ def main():
                     for result in results:
                         result.join()
                     tcounter = 0
+
+
+        for thread in threading.enumerate():
+           if thread.isAlive():
+               time.sleep(5)
+               #if thread is running give it a few seconds to terminate
+
         if pairs_found:   
             print '\n[*] found %s pairs' % len(pairs_found)
             for user, password in pairs_found.items(): print '  %s:%s' % (user, password)
