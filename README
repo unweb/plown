@@ -1,0 +1,41 @@
+About
+=====
+
+Plown is a security scanner tool for Plone CMS. Plone has the best security track record of any major CMS and is considered highly secure. Plown has been developed to ease the discovery of usernames and passwords, and act as an assistant to system administrators to strengthen their Plone sites.
+
+
+Installation
+============
+Plown is written on Python and does not need installation. Just clone the github repository and run. 
+
+user@user:~/Desktop$ git clone https://github.com/unweb/plown
+user@user:~/Desktop$ cd plown
+user@user:~/Desktop/plown$ ./plown.py
+
+
+What can Plone do
+=================
+Plown has two modes: enumeration mode and brute force mode. On enumeration mode it tries to find usernames and find out if several vulnerabilities exist. 
+On brute force mode, Plown will try to authenticate to a Plone site using a list of users and passwords specified, by connecting with multiple threads. By default 16 threads are started, with that number being configurable. 
+Plone version enumeration is scheduled for the next release of Plown.
+
+
+Help
+====
+Just run the program without any arguements to get some help
+user@user:~/Desktop/plown$ ./plown.py
+
+More
+====
+Learn about Plone security and how Plone addressess common security issues: http://plone.org/products/plone/security/overview
+
+To do
+=====
+Plone version enumeration, based on md5 hashes of static stuff (js, css).
+Better username enumeration (crawl the site and look the Creator of each page).
+More vulnerabilities to be added. 
+
+Credits
+=======
+Plown was created by provetza of Unweb.me team. provetza at unweb dot me
+
