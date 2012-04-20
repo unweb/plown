@@ -15,14 +15,14 @@ user@user:~/Desktop/plown$ ./plown.py
 
 What can Plone do
 =================
-Plown has two modes: enumeration mode and brute force mode. On enumeration mode it tries to find usernames and find out if several vulnerabilities exist. 
+Plown has two modes: enumeration mode and brute force mode. On enumeration mode it tries to find usernames and find out if several known vulnerabilities exist. 
 On brute force mode, Plown will try to authenticate to a Plone site using a list of users and passwords specified, by connecting with multiple threads. By default 16 threads are started, with that number being configurable. 
 Plone version enumeration is scheduled for the next release of Plown.
 
 
 Help
 ====
-Just run the program without any arguements to get some help
+Just run the program without any arguments to get some help
 user@user:~/Desktop/plown$ ./plown.py
 
 More
@@ -35,7 +35,10 @@ Plone version enumeration, based on md5 hashes of static stuff (js, css).
 Better username enumeration (crawl the site and look the Creator of each page).
 More vulnerabilities to be added. 
 
+Author
+======
+Plown was created by provetza of https://unweb.me. provetza at unweb dot me
+
 Credits
 =======
-Plown was created by provetza of Unweb.me team. provetza at unweb dot me
-
+All credits go to Plone creators for this awesome CMS.
