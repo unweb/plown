@@ -37,13 +37,15 @@ headers = { 'User-Agent' : "Plown %s security tool" % __version__ }
 
 
 #dict with vulnerabilities.Entries like the following:
-#VULNERABILITIES_DICT['Plone Hotfix number or CVE'] = [buggy_url, buggy scenario, hotfix_URL]
+#VULNERABILITIES_DICT['Plone Hotfix number or CVE'] = [buggy_url, buggy scenario, hotfix_URL, message]
 
 VULNERABILITIES = {
-    '20110622': ['/acl_users/getUsers','require_login', \
-        'http://plone.org/products/plone-hotfix/releases/20110622'],
+    '20110622': ['/acl_users/getUsers','credentials_cookie_auth', \
+        'http://plone.org/products/plone-hotfix/releases/20110622', ''],
     'CVE-2006-4247': ['/portal_password_reset/requestReset?userid=admin', \
-        'require_login', 'http://plone.org/products/plone/security/advisories/cve-2006-4247']
+        'credentials_cookie_auth', 'http://plone.org/products/plone/security/advisories/cve-2006-4247', ''],
+    '20110928': ['/portal_modifier/modules/StandardModifiers', 'credentials_cookie_auth', \
+        'http://plone.org/products/plone-hotfix/releases/20110928', 'This bug affects Plone 4.0.x series <= 4.0.9, 4.1(.0), 4.2 <= 4.2a2.']
 }
 
 
@@ -100,9 +102,8 @@ def find_vulnerabilities(target):
         try:
             content = handle.open(request)
             if not vuln[1] in content.geturl():
-                print "[*] %s seems to be vulnerable to bug %s. \
-    Please visit %s and apply the hotfix, or upgrade to the latest Plone version." \
-     % (target, vuln_num, vuln[2])
+                print "[*] %s seems to be vulnerable to bug %s. Please visit %s and apply the hotfix, or upgrade to the latest Plone version. %s" \
+     % (target, vuln_num, vuln[2], vuln[3])
         except Exception as e: 
             pass
 
