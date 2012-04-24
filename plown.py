@@ -7,6 +7,7 @@ import urllib2, urllib
 
 sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
 
+#tested with python 2.4, 2.6, 2.7
 description="""Plown is a security scanner tool for Plone CMS.
 Although Plone has the best security track record of any major CMS and is considered highly secure, misconfigurations 
 and weak passwords might enable system break-ins. 
@@ -80,15 +81,15 @@ def normalize_url(url):
         url = url[:-1]
 
     request, handle = url_open(url)
-    print "\nStarting Plown version %s (%s)" % (__version__, __url__)
-    print "Plown report for %s" % url
+    print ("\nStarting Plown version %s (%s)") % (__version__, __url__)
+    print ("Plown report for %s") % url
     try:
         content = unicode(handle.open(request).read(), "utf-8", errors="replace")
     except urllib2.HTTPError:
-        print 'Url not found'
+        print ("Url not found")
         sys.exit(0)
     except: 
-        print 'Failed to resolve target hostname/IP'
+        print ("Failed to resolve target hostname/IP")
         sys.exit(0)
     return url
 
@@ -102,7 +103,7 @@ def find_vulnerabilities(target):
         try:
             content = handle.open(request)
             if not vuln[1] in content.geturl():
-                print "[*] %s seems to be vulnerable to bug %s. Please visit %s and apply the hotfix, or upgrade to the latest Plone version. %s" \
+                print ("[*] %s seems to be vulnerable to bug %s. Please visit %s and apply the hotfix, or upgrade to the latest Plone version. %s") \
      % (target, vuln_num, vuln[2], vuln[3])
         except Exception, e: 
             pass
@@ -120,23 +121,23 @@ def find_usernames(target):
     try:
         content = unicode(handle.open(request).read(), "utf-8", errors="replace")
     except Exception, e: 
-        print 'Could not find any usernames'
+        print ("Could not find any usernames")
     if content:
         usernames.extend(re.findall(r"<PloneUser '([\w.]*)", content))
         usernames.extend(re.findall(r"/portal_memberdata/([\w]*) used for", content))
         if usernames:
             if len(usernames) > 30:
-                print '[*] found %s usernames. Saving on file userslist' % len(usernames)
+                print ("[*] found %s usernames. Saving on file userslist") % len(usernames)
                 try:
                     f = open('userslist', 'w')
                     f.write(', '.join(usernames))
                     f.close()
                 except:
-                    print 'Something has happened and file with usernames was not saved'
+                    print ("Something has happened and file with usernames was not saved")
             else:
-                print '[*] found %s usernames: %s' % (len(usernames), ' '.join(usernames))
+                print ("[*] found %s usernames: %s") % (len(usernames), ' '.join(usernames))
         else:
-            print 'Could not find usernames'
+            print ("Could not find usernames")
 
 
 def try_pair(target, username, password):
@@ -167,12 +168,12 @@ def makelist(file):
     try:
         fd = open(file, 'r')
     except IOError:
-        print 'unable to read file %s' % file
-        exit(-1)        
+        print ("unable to read file %s") % file
+        sys.exit(-1)        
 
     except Exception, e:
-        print 'unknown error'
-        exit(-1)
+        print ("unknown error")
+        sys.exit(-1)
 
     for line in fd.readlines(): #should be: admin,markos,nikos...
         word = line.replace('\n', '').split(',')
@@ -206,10 +207,10 @@ def main():
     try:
         target = normalize_url(args[0])
     except IndexError:   
-	    print "Plown version %s (%s) \n" % (__version__,__url__)
-	    print "Target host is missing"
-	    print usage
-	    exit(-1)
+	    print ("Plown version %s (%s) \n") % (__version__,__url__)
+	    print ("Target host is missing")
+	    print (usage)
+	    sys.exit(-1)
 
     users = options.userlist
     passwords = options.passlist
@@ -222,16 +223,16 @@ def main():
         mode = 'Enumeration'
 
     if mode == 'Enumeration':
-        print mode, 'mode, searching for usernames' 
+        print ("%s mode, searching for usernames") % mode
         find_usernames(target)
         find_vulnerabilities(target)
 
     if mode == 'Brute Force':
-        print mode, 'mode, searching for valid username/password pairs' 
+        print ("%s mode, searching for valid username/password pairs") % mode
         userlist = makelist(users)
         passwordlist = makelist(passwords)
-        print "[*] %s user(s) loaded." % str(len(userlist))
-        print "[*] %s password(s) loaded." % str(len(passwordlist))
+        print ("[*] %s user(s) loaded.") % str(len(userlist))
+        print ("[*] %s password(s) loaded.") % str(len(passwordlist))
 
         login_target = target + '/' + options.login_form
 
@@ -243,7 +244,7 @@ def main():
         global pairs_found
         pairs_found = {}
 
-        print "[*] Brute Forcing url %s with %s threads" % (login_target, threads)
+        print ("[*] Brute Forcing url %s with %s threads") % (login_target, threads)
         for user in userlist:
             for password in passwordlist:
                 current = BruteForcer(user, password, login_target)
@@ -265,10 +266,10 @@ def main():
                #if thread is running give it a few seconds to terminate
 
         if pairs_found:   
-            print '\n[*] found %s pairs' % len(pairs_found)
-            for user, password in pairs_found.items(): print '  %s:%s' % (user, password)
+            print ("\n[*] found %s pairs") % len(pairs_found)
+            for user, password in pairs_found.items(): print ("  %s:%s") % (user, password)
         else:
-            print '\nNo valid pairs are found'
+            print ("\nNo valid pairs are found")
 
 
 if __name__ == "__main__":
@@ -277,7 +278,7 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         if mode == 'Brute Force':
-            print '\n[*] found %s pairs' % len(pairs_found)
-            for user, password in pairs_found.items(): print '  %s:%s' % (user, password)            
-        print 'Ctrl+c pressed, exiting'
+            print ("\n[*] found %s pairs") % len(pairs_found)
+            for user, password in pairs_found.items(): print ("  %s:%s") % (user, password)            
+        print ("Ctrl+c pressed, exiting")
         sys.exit(0)
