@@ -104,7 +104,7 @@ def find_vulnerabilities(target):
             if not vuln[1] in content.geturl():
                 print "[*] %s seems to be vulnerable to bug %s. Please visit %s and apply the hotfix, or upgrade to the latest Plone version. %s" \
      % (target, vuln_num, vuln[2], vuln[3])
-        except Exception as e: 
+        except Exception, e: 
             pass
 
 
@@ -119,7 +119,7 @@ def find_usernames(target):
     request, handle = url_open(url)   
     try:
         content = unicode(handle.open(request).read(), "utf-8", errors="replace")
-    except Exception as e: 
+    except Exception, e: 
         print 'Could not find any usernames'
     if content:
         usernames.extend(re.findall(r"<PloneUser '([\w.]*)", content))
@@ -155,7 +155,7 @@ def try_pair(target, username, password):
         if '__ac' in response.headers['set-cookie']: 
             global pairs_found
             pairs_found[username]=password
-    except Exception as e:
+    except Exception, e:
         pass
 
 def makelist(file):
