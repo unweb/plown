@@ -1,7 +1,7 @@
 About
 =====
 
-Plown is a security scanner tool for Plone CMS. Although Plone has the best security track record of any major CMS and is considered highly secure, misconfigurations and weak passwords might enable system break-ins. Plown has been developed to ease the discovery of usernames and passwords, and act as an assistant to system administrators to strengthen their Plone sites.
+Plown is a security scanner for Plone CMS. Although Plone has the best security track record of any major CMS and is considered highly secure, misconfigurations and weak passwords might enable system break-ins. Plown has been developed to ease the discovery of usernames and passwords, and act as an assistant to system administrators to strengthen their Plone sites.
 
 
 Installation
@@ -39,6 +39,9 @@ Author
 ======
 Plown was created by provetza of https://unweb.me. provetza at unweb dot me
 
+Tested on
+========
+Python2.4, 2.6, 2.7
 Credits
 =======
 All credits go to Plone creators for this awesome CMS.
