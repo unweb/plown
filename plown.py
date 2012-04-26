@@ -27,7 +27,7 @@ EXAMPLES:
   plown.py -b -U userfile -P passfile -T 30 http://site.com
     ''' % sys.argv[0]
 
-__version__ = "0.2"
+__version__ = "0.3"
 __url__ = "https://unweb.me/projects/open-source/plown"
 __copyright__ = "Unweb.me"
 __license__ = "GPL"
@@ -246,7 +246,10 @@ def main():
 
         print ("[*] Brute Forcing url %s with %s threads") % (login_target, threads)
         for user in userlist:
-            for password in passwordlist:
+            current = BruteForcer(user, user, login_target)
+            current.start()
+            #try all passwords, plus the username itself
+            for password in passwordlist: 
                 current = BruteForcer(user, password, login_target)
                 results.append(current)
                 current.start()
