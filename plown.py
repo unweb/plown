@@ -228,6 +228,9 @@ def main():
         find_vulnerabilities(target)
 
     if mode == 'Brute Force':
+        if users == None or passwords == None:
+            print ("no user and password files specified, exiting")
+            sys.exit(-1)
         print ("%s mode, searching for valid username/password pairs") % mode
         userlist = makelist(users)
         passwordlist = makelist(passwords)
